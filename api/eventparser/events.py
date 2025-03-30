@@ -280,6 +280,10 @@ class LidAlertActivated(BaseEvent):
     @property
     def eventId(self):
         return self.ID
+    
+    @property
+    def alertString(self):
+        return self.AlertidMap.get(str(self.alertidRaw))
 
     def todict(self):
         return dict(
@@ -288,6 +292,7 @@ class LidAlertActivated(BaseEvent):
             seqNum=self.seqNum,
             eventTimestamp=str(self.eventTimestamp),
             alertidRaw=self.alertidRaw,
+            alertString=self.alertString,
             faultlocatordata=self.faultlocatordata,
             param1=self.param1,
             param2=self.param2,
@@ -474,6 +479,10 @@ class LidAlarmActivated(BaseEvent):
     @property
     def eventId(self):
         return self.ID
+    
+    @property
+    def alarmString(self):
+        return self.AlarmidMap.get(str(self.alarmidRaw)) 
 
     def todict(self):
         return dict(
@@ -482,6 +491,7 @@ class LidAlarmActivated(BaseEvent):
             seqNum=self.seqNum,
             eventTimestamp=str(self.eventTimestamp),
             alarmidRaw=self.alarmidRaw,
+            alarmString=self.alarmString,
             faultlocatordata=self.faultlocatordata,
             param1=self.param1,
             param2=self.param2,

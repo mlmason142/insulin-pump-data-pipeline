@@ -38,12 +38,39 @@ def fetch_all_events() -> dg.MaterializeResult:
     print(today)
     data = TandemSourceApi().pump_events(pump_id, today, today)
     event_data = []
+    unparsed_events = []
     for e in data:
         if isinstance (e, dict):
             event_data.append(e)
-    df = ps.DataFrame(event_data)
+        else:
+            unparsed_events.append(e)
+    path = os.getenv('PATH') 
 
-    return dg.MaterializeResult(metadata={"preview":dg.MetadataValue.md(df.to_markdown(index=False)),})
+    event_path = f'{path}/{today}/daily/events/{pump_id}'
+    if not os.path.isdir(event_path):
+      os.makedirs(event_path)
+      print("Directory created successfully!")
+    else:
+      print("Directory already exists!")   
+
+    unparsed_path = f'{path}/{today}/daily/unparsed/{pump_id}' 
+    if not os.path.isdir(unparsed_path):
+      os.makedirs(unparsed_path)
+      print("Directory created successfully!")
+    else:
+      print("Directory already exists!")  
+    
+    with open(f'{event_path}/events-{pump_id}-{today}', 'w') as f:
+        f.write(str(event_data))  
+
+    with open(f'{unparsed_path}/unparsed-{pump_id}-{today}', 'w') as f:
+        f.write(str(unparsed_events))  
+      
+
+
+    return print('job done')
+
+
 
 daily_job = dg.define_asset_job(
     "daily_job", selection=["fetch_all_events"]

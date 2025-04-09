@@ -26,10 +26,10 @@ from .eventparser.generic import Event, Events, decode_raw_events, EVENT_LEN
 from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
-load_dotenv()
-email = os.getenv('TCONNECT_EMAIL')
-password = os.getenv('TCONNECT_PASSWORD')
-pump_id = os.getenv('PUMP_ID')
+#load_dotenv()
+#email = os.getenv('TCONNECT_EMAIL')
+#password = os.getenv('TCONNECT_PASSWORD')
+#pump_id = os.getenv('PUMP_ID')
 
 class TandemSourceApi:
     LOGIN_PAGE_URL = 'https://sso.tandemdiabetes.com/'
@@ -43,11 +43,11 @@ class TandemSourceApi:
   
 
 
-    def __init__(self):
+    def __init__(self, email, password):
      
         self.login(email, password)
-        self._email = email
-        self._password = password
+     #   self._email = email
+     #   self._password = password
 
     def login(self, email, password):
         logger.info("Logging in to TandemSourceApi...")

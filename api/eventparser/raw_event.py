@@ -1,7 +1,7 @@
 import struct
 import arrow
 
-from ..secret import TIMEZONE_NAME
+from secret import TIMEZONE_NAME
 
 from dataclasses import dataclass
 

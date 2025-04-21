@@ -4,7 +4,7 @@ import requests
 import random
 import arrow
 
-from .secret import REQUESTS_PROXY
+from secret import REQUESTS_PROXY
 
 
 def parse_date(date):

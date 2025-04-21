@@ -37,7 +37,7 @@ hourly_schedule = dg.ScheduleDefinition(
 @dg.asset 
 
 def fetch_all_events() -> dg.MaterializeResult:
-    today = date.today()
+    today = '2025-04-13'
     pumpers = ['P1', 'P2']
     for x in pumpers: 
         pump_id = os.getenv(f'{x}_PUMP_ID')

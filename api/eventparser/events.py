@@ -17,10 +17,10 @@ UINT32 = '>I'
 FLOAT32 = '>f'
 
 @dataclass
-class LidBasalRateChange(BaseEvent):
-    """3: LID_BASAL_RATE_CHANGE"""
+class BasalRateChange(BaseEvent):
+    """3: BASAL_RATE_CHANGE"""
     ID = 3
-    NAME = "LID_BASAL_RATE_CHANGE"
+    NAME = "BASAL_RATE_CHANGE"
 
     raw: RawEvent
     commandedbasalrate: float # units/hour
@@ -67,7 +67,7 @@ class LidBasalRateChange(BaseEvent):
         IDP, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 24)
         changetype, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 23)
 
-        return LidBasalRateChange(
+        return BasalRateChange(
             raw = RawEvent.build(raw),
             commandedbasalrate = commandedbasalrate,
             basebasalrate = basebasalrate,
@@ -103,10 +103,10 @@ class LidBasalRateChange(BaseEvent):
 
 
 @dataclass
-class LidAlertActivated(BaseEvent):
-    """4: LID_ALERT_ACTIVATED"""
+class AlertActivated(BaseEvent):
+    """4: ALERT_ACTIVATED"""
     ID = 4
-    NAME = "LID_ALERT_ACTIVATED"
+    NAME = "ALERT_ACTIVATED"
 
     raw: RawEvent
     alertidRaw: int
@@ -261,7 +261,7 @@ class LidAlertActivated(BaseEvent):
         param1, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         param2, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
 
-        return LidAlertActivated(
+        return AlertActivated(
             raw = RawEvent.build(raw),
             alertidRaw = alertid,
             faultlocatordata = faultlocatordata,
@@ -300,10 +300,10 @@ class LidAlertActivated(BaseEvent):
 
 
 @dataclass
-class LidAlarmActivated(BaseEvent):
-    """5: LID_ALARM_ACTIVATED"""
+class AlarmActivated(BaseEvent):
+    """5: ALARM_ACTIVATED"""
     ID = 5
-    NAME = "LID_ALARM_ACTIVATED"
+    NAME = "ALARM_ACTIVATED"
 
     raw: RawEvent
     alarmidRaw: int
@@ -460,7 +460,7 @@ class LidAlarmActivated(BaseEvent):
         param1, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         param2, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
 
-        return LidAlarmActivated(
+        return AlarmActivated(
             raw = RawEvent.build(raw),
             alarmidRaw = alarmid,
             faultlocatordata = faultlocatordata,
@@ -499,10 +499,10 @@ class LidAlarmActivated(BaseEvent):
 
 
 @dataclass
-class LidMalfunctionActivated(BaseEvent):
-    """6: LID_MALFUNCTION_ACTIVATED"""
+class MalfunctionActivated(BaseEvent):
+    """6: MALFUNCTION_ACTIVATED"""
     ID = 6
-    NAME = "LID_MALFUNCTION_ACTIVATED"
+    NAME = "MALFUNCTION_ACTIVATED"
 
     raw: RawEvent
     malfidRaw: int
@@ -518,7 +518,7 @@ class LidMalfunctionActivated(BaseEvent):
         param1, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         param2, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
 
-        return LidMalfunctionActivated(
+        return MalfunctionActivated(
             raw = RawEvent.build(raw),
             malfidRaw = malfid,
             faultlocatordata = faultlocatordata,
@@ -552,10 +552,10 @@ class LidMalfunctionActivated(BaseEvent):
 
 
 @dataclass
-class LidPumpingSuspended(BaseEvent):
-    """11: LID_PUMPING_SUSPENDED"""
+class PumpingSuspended(BaseEvent):
+    """11: PUMPING_SUSPENDED"""
     ID = 11
-    NAME = "LID_PUMPING_SUSPENDED"
+    NAME = "PUMPING_SUSPENDED"
 
     raw: RawEvent
     presuspendstate: int
@@ -592,7 +592,7 @@ class LidPumpingSuspended(BaseEvent):
         suspendreason, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 15)
         rpatimeout, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 14)
 
-        return LidPumpingSuspended(
+        return PumpingSuspended(
             raw = RawEvent.build(raw),
             presuspendstate = presuspendstate,
             insulinamount = insulinamount,
@@ -626,10 +626,10 @@ class LidPumpingSuspended(BaseEvent):
 
 
 @dataclass
-class LidPumpingResumed(BaseEvent):
-    """12: LID_PUMPING_RESUMED"""
+class PumpingResumed(BaseEvent):
+    """12: PUMPING_RESUMED"""
     ID = 12
-    NAME = "LID_PUMPING_RESUMED"
+    NAME = "PUMPING_RESUMED"
 
     raw: RawEvent
     preresumestate: int
@@ -641,7 +641,7 @@ class LidPumpingResumed(BaseEvent):
         preresumestate, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
         insulinamount, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 16)
 
-        return LidPumpingResumed(
+        return PumpingResumed(
             raw = RawEvent.build(raw),
             preresumestate = preresumestate,
             insulinamount = insulinamount,
@@ -671,10 +671,10 @@ class LidPumpingResumed(BaseEvent):
 
 
 @dataclass
-class LidTimeChanged(BaseEvent):
-    """13: LID_TIME_CHANGED"""
+class TimeChanged(BaseEvent):
+    """13: TIME_CHANGED"""
     ID = 13
-    NAME = "LID_TIME_CHANGED"
+    NAME = "TIME_CHANGED"
 
     raw: RawEvent
     timeprior: int # ms
@@ -688,7 +688,7 @@ class LidTimeChanged(BaseEvent):
         timeafter, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
         Rawrtctime, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
 
-        return LidTimeChanged(
+        return TimeChanged(
             raw = RawEvent.build(raw),
             timeprior = timeprior,
             timeafter = timeafter,
@@ -720,10 +720,10 @@ class LidTimeChanged(BaseEvent):
 
 
 @dataclass
-class LidDateChanged(BaseEvent):
-    """14: LID_DATE_CHANGED"""
+class DateChanged(BaseEvent):
+    """14: DATE_CHANGED"""
     ID = 14
-    NAME = "LID_DATE_CHANGED"
+    NAME = "DATE_CHANGED"
 
     raw: RawEvent
     dateprior: int # day
@@ -737,7 +737,7 @@ class LidDateChanged(BaseEvent):
         dateafter, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
         Rawrtctime, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
 
-        return LidDateChanged(
+        return DateChanged(
             raw = RawEvent.build(raw),
             dateprior = dateprior,
             dateafter = dateafter,
@@ -769,10 +769,10 @@ class LidDateChanged(BaseEvent):
 
 
 @dataclass
-class LidBgReadingTaken(BaseEvent):
-    """16: LID_BG_READING_TAKEN"""
+class BgReadingTaken(BaseEvent):
+    """16: BG_READING_TAKEN"""
     ID = 16
-    NAME = "LID_BG_READING_TAKEN"
+    NAME = "BG_READING_TAKEN"
 
     raw: RawEvent
     selectediobRaw: int
@@ -867,7 +867,7 @@ class LidBgReadingTaken(BaseEvent):
         bgsourcetype, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 24)
         cgmcalibration, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 11)
 
-        return LidBgReadingTaken(
+        return BgReadingTaken(
             raw = RawEvent.build(raw),
             selectediobRaw = selectediob,
             BG = BG,
@@ -909,10 +909,10 @@ class LidBgReadingTaken(BaseEvent):
 
 
 @dataclass
-class LidBolusCompleted(BaseEvent):
-    """20: LID_BOLUS_COMPLETED"""
+class BolusCompleted(BaseEvent):
+    """20: BOLUS_COMPLETED"""
     ID = 20
-    NAME = "LID_BOLUS_COMPLETED"
+    NAME = "BOLUS_COMPLETED"
 
     raw: RawEvent
     completionstatusRaw: int
@@ -958,7 +958,7 @@ class LidBolusCompleted(BaseEvent):
         insulinrequested, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
         IOB, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 14)
 
-        return LidBolusCompleted(
+        return BolusCompleted(
             raw = RawEvent.build(raw),
             completionstatusRaw = completionstatus,
             bolusid = bolusid,
@@ -994,10 +994,10 @@ class LidBolusCompleted(BaseEvent):
 
 
 @dataclass
-class LidBolexCompleted(BaseEvent):
-    """21: LID_BOLEX_COMPLETED"""
+class BolexCompleted(BaseEvent):
+    """21: BOLEX_COMPLETED"""
     ID = 21
-    NAME = "LID_BOLEX_COMPLETED"
+    NAME = "BOLEX_COMPLETED"
 
     raw: RawEvent
     completionstatusRaw: int
@@ -1043,7 +1043,7 @@ class LidBolexCompleted(BaseEvent):
         insulinrequested, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
         IOB, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 14)
 
-        return LidBolexCompleted(
+        return BolexCompleted(
             raw = RawEvent.build(raw),
             completionstatusRaw = completionstatus,
             bolusid = bolusid,
@@ -1079,10 +1079,10 @@ class LidBolexCompleted(BaseEvent):
 
 
 @dataclass
-class LidAlertCleared(BaseEvent):
-    """26: LID_ALERT_CLEARED"""
+class AlertCleared(BaseEvent):
+    """26: ALERT_CLEARED"""
     ID = 26
-    NAME = "LID_ALERT_CLEARED"
+    NAME = "ALERT_CLEARED"
 
     raw: RawEvent
     alertidRaw: int
@@ -1233,7 +1233,7 @@ class LidAlertCleared(BaseEvent):
         alertid, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
         faultlocatordata, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
 
-        return LidAlertCleared(
+        return AlertCleared(
             raw = RawEvent.build(raw),
             alertidRaw = alertid,
             faultlocatordata = faultlocatordata,
@@ -1263,10 +1263,10 @@ class LidAlertCleared(BaseEvent):
 
 
 @dataclass
-class LidAlarmCleared(BaseEvent):
-    """28: LID_ALARM_CLEARED"""
+class AlarmCleared(BaseEvent):
+    """28: ALARM_CLEARED"""
     ID = 28
-    NAME = "LID_ALARM_CLEARED"
+    NAME = "ALARM_CLEARED"
 
     raw: RawEvent
     alarmidRaw: int
@@ -1417,7 +1417,7 @@ class LidAlarmCleared(BaseEvent):
     def build(raw):
         alarmid, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
 
-        return LidAlarmCleared(
+        return AlarmCleared(
             raw = RawEvent.build(raw),
             alarmidRaw = alarmid,
         )
@@ -1445,10 +1445,10 @@ class LidAlarmCleared(BaseEvent):
 
 
 @dataclass
-class LidCartridgeFilled(BaseEvent):
-    """33: LID_CARTRIDGE_FILLED"""
+class CartridgeFilled(BaseEvent):
+    """33: CARTRIDGE_FILLED"""
     ID = 33
-    NAME = "LID_CARTRIDGE_FILLED"
+    NAME = "CARTRIDGE_FILLED"
 
     raw: RawEvent
     insulinvolume: int # units
@@ -1460,7 +1460,7 @@ class LidCartridgeFilled(BaseEvent):
         insulinvolume, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
         v2Volume, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 14)
 
-        return LidCartridgeFilled(
+        return CartridgeFilled(
             raw = RawEvent.build(raw),
             insulinvolume = insulinvolume,
             v2Volume = v2Volume,
@@ -1490,10 +1490,10 @@ class LidCartridgeFilled(BaseEvent):
 
 
 @dataclass
-class LidShelfMode(BaseEvent):
-    """53: LID_SHELF_MODE"""
+class ShelfMode(BaseEvent):
+    """53: SHELF_MODE"""
     ID = 53
-    NAME = "LID_SHELF_MODE"
+    NAME = "SHELF_MODE"
 
     raw: RawEvent
     msecsincereset: int # ms
@@ -1513,7 +1513,7 @@ class LidShelfMode(BaseEvent):
         lipoRemcap, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         lipoMv, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 22)
 
-        return LidShelfMode(
+        return ShelfMode(
             raw = RawEvent.build(raw),
             msecsincereset = msecsincereset,
             lipocurrent = lipocurrent,
@@ -1551,10 +1551,10 @@ class LidShelfMode(BaseEvent):
 
 
 @dataclass
-class LidBolusActivated(BaseEvent):
-    """55: LID_BOLUS_ACTIVATED"""
+class BolusActivated(BaseEvent):
+    """55: BOLUS_ACTIVATED"""
     ID = 55
-    NAME = "LID_BOLUS_ACTIVATED"
+    NAME = "BOLUS_ACTIVATED"
 
     raw: RawEvent
     selectediobRaw: int
@@ -1587,7 +1587,7 @@ class LidBolusActivated(BaseEvent):
         IOB, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 14)
         bolussize, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 18)
 
-        return LidBolusActivated(
+        return BolusActivated(
             raw = RawEvent.build(raw),
             selectediobRaw = selectediob,
             bolusid = bolusid,
@@ -1621,10 +1621,10 @@ class LidBolusActivated(BaseEvent):
 
 
 @dataclass
-class LidBolexActivated(BaseEvent):
-    """59: LID_BOLEX_ACTIVATED"""
+class BolexActivated(BaseEvent):
+    """59: BOLEX_ACTIVATED"""
     ID = 59
-    NAME = "LID_BOLEX_ACTIVATED"
+    NAME = "BOLEX_ACTIVATED"
 
     raw: RawEvent
     selectediobRaw: int
@@ -1657,7 +1657,7 @@ class LidBolexActivated(BaseEvent):
         IOB, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 14)
         bolexsize, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 18)
 
-        return LidBolexActivated(
+        return BolexActivated(
             raw = RawEvent.build(raw),
             selectediobRaw = selectediob,
             bolusid = bolusid,
@@ -1691,10 +1691,10 @@ class LidBolexActivated(BaseEvent):
 
 
 @dataclass
-class LidDataLogCorruption(BaseEvent):
-    """60: LID_DATA_LOG_CORRUPTION"""
+class DataLogCorruption(BaseEvent):
+    """60: DATA_LOG_CORRUPTION"""
     ID = 60
-    NAME = "LID_DATA_LOG_CORRUPTION"
+    NAME = "DATA_LOG_CORRUPTION"
 
     raw: RawEvent
     block: int
@@ -1706,7 +1706,7 @@ class LidDataLogCorruption(BaseEvent):
         block, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
         reason, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 17)
 
-        return LidDataLogCorruption(
+        return DataLogCorruption(
             raw = RawEvent.build(raw),
             block = block,
             reason = reason,
@@ -1736,10 +1736,10 @@ class LidDataLogCorruption(BaseEvent):
 
 
 @dataclass
-class LidCannulaFilled(BaseEvent):
-    """61: LID_CANNULA_FILLED"""
+class CannulaFilled(BaseEvent):
+    """61: CANNULA_FILLED"""
     ID = 61
-    NAME = "LID_CANNULA_FILLED"
+    NAME = "CANNULA_FILLED"
 
     raw: RawEvent
     primesize: float # units
@@ -1772,7 +1772,7 @@ class LidCannulaFilled(BaseEvent):
         primesize, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 10)
         completionstatus, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
 
-        return LidCannulaFilled(
+        return CannulaFilled(
             raw = RawEvent.build(raw),
             primesize = primesize,
             completionstatusRaw = completionstatus,
@@ -1802,10 +1802,10 @@ class LidCannulaFilled(BaseEvent):
 
 
 @dataclass
-class LidTubingFilled(BaseEvent):
-    """63: LID_TUBING_FILLED"""
+class TubingFilled(BaseEvent):
+    """63: TUBING_FILLED"""
     ID = 63
-    NAME = "LID_TUBING_FILLED"
+    NAME = "TUBING_FILLED"
 
     raw: RawEvent
     primesize: float # units
@@ -1840,7 +1840,7 @@ class LidTubingFilled(BaseEvent):
         completionstatus, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
         position, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
 
-        return LidTubingFilled(
+        return TubingFilled(
             raw = RawEvent.build(raw),
             primesize = primesize,
             completionstatusRaw = completionstatus,
@@ -1872,10 +1872,10 @@ class LidTubingFilled(BaseEvent):
 
 
 @dataclass
-class LidBolusRequestedMsg1(BaseEvent):
-    """64: LID_BOLUS_REQUESTED_MSG1"""
+class BolusRequestedMsg1(BaseEvent):
+    """64: BOLUS_REQUESTED_MSG1"""
     ID = 64
-    NAME = "LID_BOLUS_REQUESTED_MSG1"
+    NAME = "BOLUS_REQUESTED_MSG1"
 
     raw: RawEvent
     bolusid: int
@@ -1940,7 +1940,7 @@ class LidBolusRequestedMsg1(BaseEvent):
         carbratio, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 22)
         IOB, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 18)
 
-        return LidBolusRequestedMsg1(
+        return BolusRequestedMsg1(
             raw = RawEvent.build(raw),
             bolusid = bolusid,
             bolustypeRaw = bolustype,
@@ -1980,10 +1980,10 @@ class LidBolusRequestedMsg1(BaseEvent):
 
 
 @dataclass
-class LidBolusRequestedMsg2(BaseEvent):
-    """65: LID_BOLUS_REQUESTED_MSG2"""
+class BolusRequestedMsg2(BaseEvent):
+    """65: BOLUS_REQUESTED_MSG2"""
     ID = 65
-    NAME = "LID_BOLUS_REQUESTED_MSG2"
+    NAME = "BOLUS_REQUESTED_MSG2"
 
     raw: RawEvent
     selectediobRaw: int
@@ -2092,7 +2092,7 @@ class LidBolusRequestedMsg2(BaseEvent):
         useroverride, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 25)
         declinedcorrection, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 24)
 
-        return LidBolusRequestedMsg2(
+        return BolusRequestedMsg2(
             raw = RawEvent.build(raw),
             selectediobRaw = selectediob,
             bolusid = bolusid,
@@ -2136,10 +2136,10 @@ class LidBolusRequestedMsg2(BaseEvent):
 
 
 @dataclass
-class LidBolusRequestedMsg3(BaseEvent):
-    """66: LID_BOLUS_REQUESTED_MSG3"""
+class BolusRequestedMsg3(BaseEvent):
+    """66: BOLUS_REQUESTED_MSG3"""
     ID = 66
-    NAME = "LID_BOLUS_REQUESTED_MSG3"
+    NAME = "BOLUS_REQUESTED_MSG3"
 
     raw: RawEvent
     bolusid: int
@@ -2155,7 +2155,7 @@ class LidBolusRequestedMsg3(BaseEvent):
         correctionbolussize, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 18)
         totalbolussize, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
 
-        return LidBolusRequestedMsg3(
+        return BolusRequestedMsg3(
             raw = RawEvent.build(raw),
             bolusid = bolusid,
             foodbolussize = foodbolussize,
@@ -2189,10 +2189,10 @@ class LidBolusRequestedMsg3(BaseEvent):
 
 
 @dataclass
-class LidNewDay(BaseEvent):
-    """90: LID_NEW_DAY"""
+class NewDay(BaseEvent):
+    """90: NEW_DAY"""
     ID = 90
-    NAME = "LID_NEW_DAY"
+    NAME = "NEW_DAY"
 
     raw: RawEvent
     commandedbasalrate: float # units/hour
@@ -2206,7 +2206,7 @@ class LidNewDay(BaseEvent):
         featuresbitmask, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
         featurebitmaskindex, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
 
-        return LidNewDay(
+        return NewDay(
             raw = RawEvent.build(raw),
             commandedbasalrate = commandedbasalrate,
             featuresbitmask = featuresbitmask,
@@ -2238,10 +2238,10 @@ class LidNewDay(BaseEvent):
 
 
 @dataclass
-class LidArmInit(BaseEvent):
-    """99: LID_ARM_INIT"""
+class ArmInit(BaseEvent):
+    """99: ARM_INIT"""
     ID = 99
-    NAME = "LID_ARM_INIT"
+    NAME = "ARM_INIT"
 
     raw: RawEvent
     version: int
@@ -2257,7 +2257,7 @@ class LidArmInit(BaseEvent):
         configbbits, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         numlogentries, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 22)
 
-        return LidArmInit(
+        return ArmInit(
             raw = RawEvent.build(raw),
             version = version,
             configabits = configabits,
@@ -2291,10 +2291,10 @@ class LidArmInit(BaseEvent):
 
 
 @dataclass
-class LidPlgsPeriodic(BaseEvent):
-    """140: LID_PLGS_PERIODIC"""
+class PlgsPeriodic(BaseEvent):
+    """140: PLGS_PERIODIC"""
     ID = 140
-    NAME = "LID_PLGS_PERIODIC"
+    NAME = "PLGS_PERIODIC"
 
     raw: RawEvent
     timestamp: int # sec
@@ -2444,7 +2444,7 @@ class LidPlgsPeriodic(BaseEvent):
         hominstate, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 18)
         status, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 22)
 
-        return LidPlgsPeriodic(
+        return PlgsPeriodic(
             raw = RawEvent.build(raw),
             timestamp = timestamp,
             FMR = FMR,
@@ -2486,10 +2486,10 @@ class LidPlgsPeriodic(BaseEvent):
 
 
 @dataclass
-class LidCgmAlertActivated(BaseEvent):
-    """171: LID_CGM_ALERT_ACTIVATED"""
+class CgmAlertActivated(BaseEvent):
+    """171: CGM_ALERT_ACTIVATED"""
     ID = 171
-    NAME = "LID_CGM_ALERT_ACTIVATED"
+    NAME = "CGM_ALERT_ACTIVATED"
 
     raw: RawEvent
     dalertidRaw: int
@@ -2534,7 +2534,7 @@ class LidCgmAlertActivated(BaseEvent):
         param1, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         param2, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
 
-        return LidCgmAlertActivated(
+        return CgmAlertActivated(
             raw = RawEvent.build(raw),
             dalertidRaw = dalertid,
             faultlocatordata = faultlocatordata,
@@ -2568,10 +2568,10 @@ class LidCgmAlertActivated(BaseEvent):
 
 
 @dataclass
-class LidCgmAlertCleared(BaseEvent):
-    """172: LID_CGM_ALERT_CLEARED"""
+class CgmAlertCleared(BaseEvent):
+    """172: CGM_ALERT_CLEARED"""
     ID = 172
-    NAME = "LID_CGM_ALERT_CLEARED"
+    NAME = "CGM_ALERT_CLEARED"
 
     raw: RawEvent
     dalertidRaw: int
@@ -2610,7 +2610,7 @@ class LidCgmAlertCleared(BaseEvent):
     def build(raw):
         dalertid, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
 
-        return LidCgmAlertCleared(
+        return CgmAlertCleared(
             raw = RawEvent.build(raw),
             dalertidRaw = dalertid,
         )
@@ -2638,10 +2638,10 @@ class LidCgmAlertCleared(BaseEvent):
 
 
 @dataclass
-class LidVersionInfo(BaseEvent):
-    """191: LID_VERSION_INFO"""
+class VersionInfo(BaseEvent):
+    """191: VERSION_INFO"""
     ID = 191
-    NAME = "LID_VERSION_INFO"
+    NAME = "VERSION_INFO"
 
     raw: RawEvent
     version: int
@@ -2657,7 +2657,7 @@ class LidVersionInfo(BaseEvent):
         configbbits, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         armcrc, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 24)
 
-        return LidVersionInfo(
+        return VersionInfo(
             raw = RawEvent.build(raw),
             version = version,
             configabits = configabits,
@@ -2691,10 +2691,10 @@ class LidVersionInfo(BaseEvent):
 
 
 @dataclass
-class LidUpdateStatus(BaseEvent):
-    """203: LID_UPDATE_STATUS"""
+class UpdateStatus(BaseEvent):
+    """203: UPDATE_STATUS"""
     ID = 203
-    NAME = "LID_UPDATE_STATUS"
+    NAME = "UPDATE_STATUS"
 
     raw: RawEvent
     swupdatestatus: int
@@ -2733,7 +2733,7 @@ class LidUpdateStatus(BaseEvent):
         updatesuccessful, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 19)
         swpartnum, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 22)
 
-        return LidUpdateStatus(
+        return UpdateStatus(
             raw = RawEvent.build(raw),
             swupdatestatus = swupdatestatus,
             metadataandversionstatus = metadataandversionstatus,
@@ -2773,10 +2773,10 @@ class LidUpdateStatus(BaseEvent):
 
 
 @dataclass
-class LidCgmStartSessionGx(BaseEvent):
-    """212: LID_CGM_START_SESSION_GX"""
+class CgmStartSessionGx(BaseEvent):
+    """212: CGM_START_SESSION_GX"""
     ID = 212
-    NAME = "LID_CGM_START_SESSION_GX"
+    NAME = "CGM_START_SESSION_GX"
 
     raw: RawEvent
     currenttransmittertime: int # sec
@@ -2790,7 +2790,7 @@ class LidCgmStartSessionGx(BaseEvent):
         sessionstarttime, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
         sessionduration, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 25)
 
-        return LidCgmStartSessionGx(
+        return CgmStartSessionGx(
             raw = RawEvent.build(raw),
             currenttransmittertime = currenttransmittertime,
             sessionstarttime = sessionstarttime,
@@ -2822,10 +2822,10 @@ class LidCgmStartSessionGx(BaseEvent):
 
 
 @dataclass
-class LidCgmJoinSessionGx(BaseEvent):
-    """213: LID_CGM_JOIN_SESSION_GX"""
+class CgmJoinSessionGx(BaseEvent):
+    """213: CGM_JOIN_SESSION_GX"""
     ID = 213
-    NAME = "LID_CGM_JOIN_SESSION_GX"
+    NAME = "CGM_JOIN_SESSION_GX"
 
     raw: RawEvent
     currenttransmittertime: int # sec
@@ -2880,7 +2880,7 @@ class LidCgmJoinSessionGx(BaseEvent):
         sessionduration, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 25)
         sessionjoinreason, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 24)
 
-        return LidCgmJoinSessionGx(
+        return CgmJoinSessionGx(
             raw = RawEvent.build(raw),
             currenttransmittertime = currenttransmittertime,
             sessionstarttime = sessionstarttime,
@@ -2914,10 +2914,10 @@ class LidCgmJoinSessionGx(BaseEvent):
 
 
 @dataclass
-class LidCgmStopSessionGx(BaseEvent):
-    """214: LID_CGM_STOP_SESSION_GX"""
+class CgmStopSessionGx(BaseEvent):
+    """214: CGM_STOP_SESSION_GX"""
     ID = 214
-    NAME = "LID_CGM_STOP_SESSION_GX"
+    NAME = "CGM_STOP_SESSION_GX"
 
     raw: RawEvent
     currenttransmittertime: int # sec
@@ -2974,7 +2974,7 @@ class LidCgmStopSessionGx(BaseEvent):
         sessionduration, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 25)
         sessionstopreason, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 24)
 
-        return LidCgmStopSessionGx(
+        return CgmStopSessionGx(
             raw = RawEvent.build(raw),
             currenttransmittertime = currenttransmittertime,
             sessionstarttime = sessionstarttime,
@@ -3010,10 +3010,10 @@ class LidCgmStopSessionGx(BaseEvent):
 
 
 @dataclass
-class LidAaUserModeChange(BaseEvent):
-    """229: LID_AA_USER_MODE_CHANGE"""
+class AaUserModeChange(BaseEvent):
+    """229: AA_USER_MODE_CHANGE"""
     ID = 229
-    NAME = "LID_AA_USER_MODE_CHANGE"
+    NAME = "AA_USER_MODE_CHANGE"
 
     raw: RawEvent
     exercisechoiceRaw: int
@@ -3206,7 +3206,7 @@ class LidAaUserModeChange(BaseEvent):
         activesleepschedule, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 16)
         eatingsoonstoppedbytimer, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 25)
 
-        return LidAaUserModeChange(
+        return AaUserModeChange(
             raw = RawEvent.build(raw),
             exercisechoiceRaw = exercisechoice,
             exercisetime = exercisetime,
@@ -3250,10 +3250,10 @@ class LidAaUserModeChange(BaseEvent):
 
 
 @dataclass
-class LidAaPcmChange(BaseEvent):
-    """230: LID_AA_PCM_CHANGE"""
+class AaPcmChange(BaseEvent):
+    """230: AA_PCM_CHANGE"""
     ID = 230
-    NAME = "LID_AA_PCM_CHANGE"
+    NAME = "AA_PCM_CHANGE"
 
     raw: RawEvent
     currentpcmRaw: int
@@ -3408,7 +3408,7 @@ class LidAaPcmChange(BaseEvent):
         closedlooppreferred, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 16)
         sufficientclosedloopparams, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 15)
 
-        return LidAaPcmChange(
+        return AaPcmChange(
             raw = RawEvent.build(raw),
             currentpcmRaw = currentpcm,
             previouspcmRaw = previouspcm,
@@ -3448,10 +3448,10 @@ class LidAaPcmChange(BaseEvent):
 
 
 @dataclass
-class LidCgmDataGxb(BaseEvent):
-    """256: LID_CGM_DATA_GXB"""
+class CgmDataGxb(BaseEvent):
+    """256: CGM_DATA_GXB"""
     ID = 256
-    NAME = "LID_CGM_DATA_GXB"
+    NAME = "CGM_DATA_GXB"
 
     raw: RawEvent
     glucosevaluestatusRaw: int
@@ -3556,7 +3556,7 @@ class LidCgmDataGxb(BaseEvent):
         egvInfoBitmask, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 24)
         interval, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 23)
 
-        return LidCgmDataGxb(
+        return CgmDataGxb(
             raw = RawEvent.build(raw),
             glucosevaluestatusRaw = glucosevaluestatus,
             cgmDataTypeRaw = cgmDataType,
@@ -3600,10 +3600,10 @@ class LidCgmDataGxb(BaseEvent):
 
 
 @dataclass
-class LidBasalDelivery(BaseEvent):
-    """279: LID_BASAL_DELIVERY"""
+class BasalDelivery(BaseEvent):
+    """279: BASAL_DELIVERY"""
     ID = 279
-    NAME = "LID_BASAL_DELIVERY"
+    NAME = "BASAL_DELIVERY"
 
     raw: RawEvent
     commandedRateSourceRaw: int
@@ -3644,7 +3644,7 @@ class LidBasalDelivery(BaseEvent):
         algorithmRate, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 20)
         tempRate, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 18)
 
-        return LidBasalDelivery(
+        return BasalDelivery(
             raw = RawEvent.build(raw),
             commandedRateSourceRaw = commandedRateSource,
             commandedRate = commandedRate,
@@ -3680,10 +3680,10 @@ class LidBasalDelivery(BaseEvent):
 
 
 @dataclass
-class LidBolusDelivery(BaseEvent):
-    """280: LID_BOLUS_DELIVERY"""
+class BolusDelivery(BaseEvent):
+    """280: BOLUS_DELIVERY"""
     ID = 280
-    NAME = "LID_BOLUS_DELIVERY"
+    NAME = "BOLUS_DELIVERY"
 
     raw: RawEvent
     bolusid: int
@@ -3784,7 +3784,7 @@ class LidBolusDelivery(BaseEvent):
         deliveredTotal, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 22)
         correction, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 18)
 
-        return LidBolusDelivery(
+        return BolusDelivery(
             raw = RawEvent.build(raw),
             bolusid = bolusid,
             bolusDeliveryStatusRaw = bolusDeliveryStatus,
@@ -3830,10 +3830,10 @@ class LidBolusDelivery(BaseEvent):
 
 
 @dataclass
-class LidVersionsA(BaseEvent):
-    """307: LID_VERSIONS_A"""
+class VersionsA(BaseEvent):
+    """307: VERSIONS_A"""
     ID = 307
-    NAME = "LID_VERSIONS_A"
+    NAME = "VERSIONS_A"
 
     raw: RawEvent
     armpartnumber: int
@@ -3849,7 +3849,7 @@ class LidVersionsA(BaseEvent):
         blepartnumber, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         bleswversion, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 22)
 
-        return LidVersionsA(
+        return VersionsA(
             raw = RawEvent.build(raw),
             armpartnumber = armpartnumber,
             armswversion = armswversion,
@@ -3883,10 +3883,10 @@ class LidVersionsA(BaseEvent):
 
 
 @dataclass
-class LidAaDailyStatus(BaseEvent):
-    """313: LID_AA_DAILY_STATUS"""
+class AaDailyStatus(BaseEvent):
+    """313: AA_DAILY_STATUS"""
     ID = 313
-    NAME = "LID_AA_DAILY_STATUS"
+    NAME = "AA_DAILY_STATUS"
 
     raw: RawEvent
     pumpcontrolstateRaw: int
@@ -3963,7 +3963,7 @@ class LidAaDailyStatus(BaseEvent):
         usermode, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 12)
         sensortype, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 11)
 
-        return LidAaDailyStatus(
+        return AaDailyStatus(
             raw = RawEvent.build(raw),
             pumpcontrolstateRaw = pumpcontrolstate,
             usermodeRaw = usermode,
@@ -3995,10 +3995,10 @@ class LidAaDailyStatus(BaseEvent):
 
 
 @dataclass
-class LidCgmAlertActivatedDex(BaseEvent):
-    """369: LID_CGM_ALERT_ACTIVATED_DEX"""
+class CgmAlertActivatedDex(BaseEvent):
+    """369: CGM_ALERT_ACTIVATED_DEX"""
     ID = 369
-    NAME = "LID_CGM_ALERT_ACTIVATED_DEX"
+    NAME = "CGM_ALERT_ACTIVATED_DEX"
 
     raw: RawEvent
     dalertidRaw: int
@@ -4065,7 +4065,7 @@ class LidCgmAlertActivatedDex(BaseEvent):
         param1, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         param2, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
 
-        return LidCgmAlertActivatedDex(
+        return CgmAlertActivatedDex(
             raw = RawEvent.build(raw),
             dalertidRaw = dalertid,
             sensortypeRaw = sensortype,
@@ -4101,10 +4101,10 @@ class LidCgmAlertActivatedDex(BaseEvent):
 
 
 @dataclass
-class LidCgmAlertClearedDex(BaseEvent):
-    """370: LID_CGM_ALERT_CLEARED_DEX"""
+class CgmAlertClearedDex(BaseEvent):
+    """370: CGM_ALERT_CLEARED_DEX"""
     ID = 370
-    NAME = "LID_CGM_ALERT_CLEARED_DEX"
+    NAME = "CGM_ALERT_CLEARED_DEX"
 
     raw: RawEvent
     dalertidRaw: int
@@ -4165,7 +4165,7 @@ class LidCgmAlertClearedDex(BaseEvent):
         dalertid, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 13)
         sensortype, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 12)
 
-        return LidCgmAlertClearedDex(
+        return CgmAlertClearedDex(
             raw = RawEvent.build(raw),
             dalertidRaw = dalertid,
             sensortypeRaw = sensortype,
@@ -4195,10 +4195,10 @@ class LidCgmAlertClearedDex(BaseEvent):
 
 
 @dataclass
-class LidCgmAlertAckDex(BaseEvent):
-    """371: LID_CGM_ALERT_ACK_DEX"""
+class CgmAlertAckDex(BaseEvent):
+    """371: CGM_ALERT_ACK_DEX"""
     ID = 371
-    NAME = "LID_CGM_ALERT_ACK_DEX"
+    NAME = "CGM_ALERT_ACK_DEX"
 
     raw: RawEvent
     dalertidRaw: int
@@ -4279,7 +4279,7 @@ class LidCgmAlertAckDex(BaseEvent):
         sensortype, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 12)
         acksource, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
 
-        return LidCgmAlertAckDex(
+        return CgmAlertAckDex(
             raw = RawEvent.build(raw),
             dalertidRaw = dalertid,
             sensortypeRaw = sensortype,
@@ -4311,10 +4311,10 @@ class LidCgmAlertAckDex(BaseEvent):
 
 
 @dataclass
-class LidCgmDataFsl2(BaseEvent):
-    """372: LID_CGM_DATA_FSL2"""
+class CgmDataFsl2(BaseEvent):
+    """372: CGM_DATA_FSL2"""
     ID = 372
-    NAME = "LID_CGM_DATA_FSL2"
+    NAME = "CGM_DATA_FSL2"
 
     raw: RawEvent
     glucosevaluestatusRaw: int
@@ -4453,7 +4453,7 @@ class LidCgmDataFsl2(BaseEvent):
         egvInfoBitmask, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 24)
         interval, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 23)
 
-        return LidCgmDataFsl2(
+        return CgmDataFsl2(
             raw = RawEvent.build(raw),
             glucosevaluestatusRaw = glucosevaluestatus,
             cgmDataTypeRaw = cgmDataType,
@@ -4497,10 +4497,10 @@ class LidCgmDataFsl2(BaseEvent):
 
 
 @dataclass
-class LidCgmJoinSessionG7(BaseEvent):
-    """394: LID_CGM_JOIN_SESSION_G7"""
+class CgmJoinSessionG7(BaseEvent):
+    """394: CGM_JOIN_SESSION_G7"""
     ID = 394
-    NAME = "LID_CGM_JOIN_SESSION_G7"
+    NAME = "CGM_JOIN_SESSION_G7"
 
     raw: RawEvent
     cgmtimestamp: int # Seconds
@@ -4512,7 +4512,7 @@ class LidCgmJoinSessionG7(BaseEvent):
         cgmtimestamp, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
         sessionsignature, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 14)
 
-        return LidCgmJoinSessionG7(
+        return CgmJoinSessionG7(
             raw = RawEvent.build(raw),
             cgmtimestamp = cgmtimestamp,
             sessionsignature = sessionsignature,
@@ -4542,10 +4542,10 @@ class LidCgmJoinSessionG7(BaseEvent):
 
 
 @dataclass
-class LidCgmDataG7(BaseEvent):
-    """399: LID_CGM_DATA_G7"""
+class CgmDataG7(BaseEvent):
+    """399: CGM_DATA_G7"""
     ID = 399
-    NAME = "LID_CGM_DATA_G7"
+    NAME = "CGM_DATA_G7"
 
     raw: RawEvent
     glucosevaluestatusRaw: int
@@ -4690,7 +4690,7 @@ class LidCgmDataG7(BaseEvent):
         egvInfoBitmask, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 24)
         interval, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 23)
 
-        return LidCgmDataG7(
+        return CgmDataG7(
             raw = RawEvent.build(raw),
             glucosevaluestatusRaw = glucosevaluestatus,
             cgmDataTypeRaw = cgmDataType,
@@ -4734,10 +4734,10 @@ class LidCgmDataG7(BaseEvent):
 
 
 @dataclass
-class LidCgmStartSessionFsl2(BaseEvent):
-    """404: LID_CGM_START_SESSION_FSL2"""
+class CgmStartSessionFsl2(BaseEvent):
+    """404: CGM_START_SESSION_FSL2"""
     ID = 404
-    NAME = "LID_CGM_START_SESSION_FSL2"
+    NAME = "CGM_START_SESSION_FSL2"
 
     raw: RawEvent
     sessionstarttime: int # sec
@@ -4749,7 +4749,7 @@ class LidCgmStartSessionFsl2(BaseEvent):
         sessionstarttime, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 10)
         sessionduration, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 17)
 
-        return LidCgmStartSessionFsl2(
+        return CgmStartSessionFsl2(
             raw = RawEvent.build(raw),
             sessionstarttime = sessionstarttime,
             sessionduration = sessionduration,
@@ -4779,10 +4779,10 @@ class LidCgmStartSessionFsl2(BaseEvent):
 
 
 @dataclass
-class LidCgmStopSessionFsl2(BaseEvent):
-    """405: LID_CGM_STOP_SESSION_FSL2"""
+class CgmStopSessionFsl2(BaseEvent):
+    """405: CGM_STOP_SESSION_FSL2"""
     ID = 405
-    NAME = "LID_CGM_STOP_SESSION_FSL2"
+    NAME = "CGM_STOP_SESSION_FSL2"
 
     raw: RawEvent
     sessionstarttime: int # sec
@@ -4798,7 +4798,7 @@ class LidCgmStopSessionFsl2(BaseEvent):
         sessionduration, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 21)
         sessionstopreason, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 20)
 
-        return LidCgmStopSessionFsl2(
+        return CgmStopSessionFsl2(
             raw = RawEvent.build(raw),
             sessionstarttime = sessionstarttime,
             sessionstoptime = sessionstoptime,
@@ -4832,10 +4832,10 @@ class LidCgmStopSessionFsl2(BaseEvent):
 
 
 @dataclass
-class LidCgmJoinSessionFsl2(BaseEvent):
-    """406: LID_CGM_JOIN_SESSION_FSL2"""
+class CgmJoinSessionFsl2(BaseEvent):
+    """406: CGM_JOIN_SESSION_FSL2"""
     ID = 406
-    NAME = "LID_CGM_JOIN_SESSION_FSL2"
+    NAME = "CGM_JOIN_SESSION_FSL2"
 
     raw: RawEvent
     sessionstarttime: int # sec
@@ -4851,7 +4851,7 @@ class LidCgmJoinSessionFsl2(BaseEvent):
         sessionduration, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 21)
         sessionjoinreason, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 20)
 
-        return LidCgmJoinSessionFsl2(
+        return CgmJoinSessionFsl2(
             raw = RawEvent.build(raw),
             sessionstarttime = sessionstarttime,
             sessionjointime = sessionjointime,
@@ -4885,10 +4885,10 @@ class LidCgmJoinSessionFsl2(BaseEvent):
 
 
 @dataclass
-class LidCgmStopSessionG7(BaseEvent):
-    """447: LID_CGM_STOP_SESSION_G7"""
+class CgmStopSessionG7(BaseEvent):
+    """447: CGM_STOP_SESSION_G7"""
     ID = 447
-    NAME = "LID_CGM_STOP_SESSION_G7"
+    NAME = "CGM_STOP_SESSION_G7"
 
     raw: RawEvent
     currenttransmittertime: int # sec
@@ -4908,7 +4908,7 @@ class LidCgmStopSessionG7(BaseEvent):
         sessionstopreason, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 24)
         stopsessioncode, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 23)
 
-        return LidCgmStopSessionG7(
+        return CgmStopSessionG7(
             raw = RawEvent.build(raw),
             currenttransmittertime = currenttransmittertime,
             sessionstarttime = sessionstarttime,
@@ -4946,10 +4946,10 @@ class LidCgmStopSessionG7(BaseEvent):
 
 
 @dataclass
-class LidCgmAlertActivatedFsl2(BaseEvent):
-    """460: LID_CGM_ALERT_ACTIVATED_FSL2"""
+class CgmAlertActivatedFsl2(BaseEvent):
+    """460: CGM_ALERT_ACTIVATED_FSL2"""
     ID = 460
-    NAME = "LID_CGM_ALERT_ACTIVATED_FSL2"
+    NAME = "CGM_ALERT_ACTIVATED_FSL2"
 
     raw: RawEvent
     dalertidRaw: int
@@ -5014,7 +5014,7 @@ class LidCgmAlertActivatedFsl2(BaseEvent):
         param1, = struct.unpack_from(UINT32, raw[:EVENT_LEN], 18)
         param2, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 22)
 
-        return LidCgmAlertActivatedFsl2(
+        return CgmAlertActivatedFsl2(
             raw = RawEvent.build(raw),
             dalertidRaw = dalertid,
             sensortypeRaw = sensortype,
@@ -5050,10 +5050,10 @@ class LidCgmAlertActivatedFsl2(BaseEvent):
 
 
 @dataclass
-class LidCgmAlertClearedFsl2(BaseEvent):
-    """461: LID_CGM_ALERT_CLEARED_FSL2"""
+class CgmAlertClearedFsl2(BaseEvent):
+    """461: CGM_ALERT_CLEARED_FSL2"""
     ID = 461
-    NAME = "LID_CGM_ALERT_CLEARED_FSL2"
+    NAME = "CGM_ALERT_CLEARED_FSL2"
 
     raw: RawEvent
     dalertidRaw: int
@@ -5112,7 +5112,7 @@ class LidCgmAlertClearedFsl2(BaseEvent):
         dalertid, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 13)
         sensortype, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 12)
 
-        return LidCgmAlertClearedFsl2(
+        return CgmAlertClearedFsl2(
             raw = RawEvent.build(raw),
             dalertidRaw = dalertid,
             sensortypeRaw = sensortype,
@@ -5142,10 +5142,10 @@ class LidCgmAlertClearedFsl2(BaseEvent):
 
 
 @dataclass
-class LidDailyBasal(BaseEvent):
-    """81: LID_DAILY_BASAL"""
+class DailyBasal(BaseEvent):
+    """81: DAILY_BASAL"""
     ID = 81
-    NAME = "LID_DAILY_BASAL"
+    NAME = "DAILY_BASAL"
 
     raw: RawEvent
     dailytotalbasal: float # units
@@ -5168,7 +5168,7 @@ class LidDailyBasal(BaseEvent):
         batterychargepercentlsbRaw, = struct.unpack_from(UINT8, raw[:EVENT_LEN], 23)
         batterylipomillivolts, = struct.unpack_from(UINT16, raw[:EVENT_LEN], 24)
 
-        return LidDailyBasal(
+        return DailyBasal(
             raw = RawEvent.build(raw),
             dailytotalbasal = dailytotalbasal,
             lastbasalrate = lastbasalrate,
@@ -5206,10 +5206,10 @@ class LidDailyBasal(BaseEvent):
 
 
 @dataclass
-class LidCarbsEntered(BaseEvent):
-    """48: LID_CARBS_ENTERED"""
+class CarbsEntered(BaseEvent):
+    """48: CARBS_ENTERED"""
     ID = 48
-    NAME = "LID_CARBS_ENTERED"
+    NAME = "CARBS_ENTERED"
 
     raw: RawEvent
     carbs: float # carbs
@@ -5219,7 +5219,7 @@ class LidCarbsEntered(BaseEvent):
     def build(raw):
         carbs, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 10)
 
-        return LidCarbsEntered(
+        return CarbsEntered(
             raw = RawEvent.build(raw),
             carbs = carbs,
         )
@@ -5247,10 +5247,10 @@ class LidCarbsEntered(BaseEvent):
 
 
 @dataclass
-class LidUsbConnected(BaseEvent):
-    """36: LID_USB_CONNECTED"""
+class UsbConnected(BaseEvent):
+    """36: USB_CONNECTED"""
     ID = 36
-    NAME = "LID_USB_CONNECTED"
+    NAME = "USB_CONNECTED"
 
     raw: RawEvent
     negotiatedcurrent: float # mA
@@ -5260,7 +5260,7 @@ class LidUsbConnected(BaseEvent):
     def build(raw):
         negotiatedcurrent, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 10)
 
-        return LidUsbConnected(
+        return UsbConnected(
             raw = RawEvent.build(raw),
             negotiatedcurrent = negotiatedcurrent,
         )
@@ -5288,10 +5288,10 @@ class LidUsbConnected(BaseEvent):
 
 
 @dataclass
-class LidUsbDisconnected(BaseEvent):
-    """37: LID_USB_DISCONNECTED"""
+class UsbDisconnected(BaseEvent):
+    """37: USB_DISCONNECTED"""
     ID = 37
-    NAME = "LID_USB_DISCONNECTED"
+    NAME = "USB_DISCONNECTED"
 
     raw: RawEvent
     negotiatedcurrent: float # mA
@@ -5301,7 +5301,7 @@ class LidUsbDisconnected(BaseEvent):
     def build(raw):
         negotiatedcurrent, = struct.unpack_from(FLOAT32, raw[:EVENT_LEN], 10)
 
-        return LidUsbDisconnected(
+        return UsbDisconnected(
             raw = RawEvent.build(raw),
             negotiatedcurrent = negotiatedcurrent,
         )
@@ -5328,120 +5328,120 @@ class LidUsbDisconnected(BaseEvent):
         )
 
 EVENT_IDS = {
-    3: LidBasalRateChange,
-    4: LidAlertActivated,
-    5: LidAlarmActivated,
-    6: LidMalfunctionActivated,
-    11: LidPumpingSuspended,
-    12: LidPumpingResumed,
-    13: LidTimeChanged,
-    14: LidDateChanged,
-    16: LidBgReadingTaken,
-    20: LidBolusCompleted,
-    21: LidBolexCompleted,
-    26: LidAlertCleared,
-    28: LidAlarmCleared,
-    33: LidCartridgeFilled,
-    53: LidShelfMode,
-    55: LidBolusActivated,
-    59: LidBolexActivated,
-    60: LidDataLogCorruption,
-    61: LidCannulaFilled,
-    63: LidTubingFilled,
-    64: LidBolusRequestedMsg1,
-    65: LidBolusRequestedMsg2,
-    66: LidBolusRequestedMsg3,
-    90: LidNewDay,
-    99: LidArmInit,
-    140: LidPlgsPeriodic,
-    171: LidCgmAlertActivated,
-    172: LidCgmAlertCleared,
-    191: LidVersionInfo,
-    203: LidUpdateStatus,
-    212: LidCgmStartSessionGx,
-    213: LidCgmJoinSessionGx,
-    214: LidCgmStopSessionGx,
-    229: LidAaUserModeChange,
-    230: LidAaPcmChange,
-    256: LidCgmDataGxb,
-    279: LidBasalDelivery,
-    280: LidBolusDelivery,
-    307: LidVersionsA,
-    313: LidAaDailyStatus,
-    369: LidCgmAlertActivatedDex,
-    370: LidCgmAlertClearedDex,
-    371: LidCgmAlertAckDex,
-    372: LidCgmDataFsl2,
-    394: LidCgmJoinSessionG7,
-    399: LidCgmDataG7,
-    404: LidCgmStartSessionFsl2,
-    405: LidCgmStopSessionFsl2,
-    406: LidCgmJoinSessionFsl2,
-    447: LidCgmStopSessionG7,
-    460: LidCgmAlertActivatedFsl2,
-    461: LidCgmAlertClearedFsl2,
-    81: LidDailyBasal,
-    48: LidCarbsEntered,
-    36: LidUsbConnected,
-    37: LidUsbDisconnected,
+    3: BasalRateChange,
+    4: AlertActivated,
+    5: AlarmActivated,
+    6: MalfunctionActivated,
+    11: PumpingSuspended,
+    12: PumpingResumed,
+    13: TimeChanged,
+    14: DateChanged,
+    16: BgReadingTaken,
+    20: BolusCompleted,
+    21: BolexCompleted,
+    26: AlertCleared,
+    28: AlarmCleared,
+    33: CartridgeFilled,
+    53: ShelfMode,
+    55: BolusActivated,
+    59: BolexActivated,
+    60: DataLogCorruption,
+    61: CannulaFilled,
+    63: TubingFilled,
+    64: BolusRequestedMsg1,
+    65: BolusRequestedMsg2,
+    66: BolusRequestedMsg3,
+    90: NewDay,
+    99: ArmInit,
+    140: PlgsPeriodic,
+    171: CgmAlertActivated,
+    172: CgmAlertCleared,
+    191: VersionInfo,
+    203: UpdateStatus,
+    212: CgmStartSessionGx,
+    213: CgmJoinSessionGx,
+    214: CgmStopSessionGx,
+    229: AaUserModeChange,
+    230: AaPcmChange,
+    256: CgmDataGxb,
+    279: BasalDelivery,
+    280: BolusDelivery,
+    307: VersionsA,
+    313: AaDailyStatus,
+    369: CgmAlertActivatedDex,
+    370: CgmAlertClearedDex,
+    371: CgmAlertAckDex,
+    372: CgmDataFsl2,
+    394: CgmJoinSessionG7,
+    399: CgmDataG7,
+    404: CgmStartSessionFsl2,
+    405: CgmStopSessionFsl2,
+    406: CgmJoinSessionFsl2,
+    447: CgmStopSessionG7,
+    460: CgmAlertActivatedFsl2,
+    461: CgmAlertClearedFsl2,
+    81: DailyBasal,
+    48: CarbsEntered,
+    36: UsbConnected,
+    37: UsbDisconnected,
 }
 
 EVENT_NAMES = {
-    "LID_BASAL_RATE_CHANGE": LidBasalRateChange,
-    "LID_ALERT_ACTIVATED": LidAlertActivated,
-    "LID_ALARM_ACTIVATED": LidAlarmActivated,
-    "LID_MALFUNCTION_ACTIVATED": LidMalfunctionActivated,
-    "LID_PUMPING_SUSPENDED": LidPumpingSuspended,
-    "LID_PUMPING_RESUMED": LidPumpingResumed,
-    "LID_TIME_CHANGED": LidTimeChanged,
-    "LID_DATE_CHANGED": LidDateChanged,
-    "LID_BG_READING_TAKEN": LidBgReadingTaken,
-    "LID_BOLUS_COMPLETED": LidBolusCompleted,
-    "LID_BOLEX_COMPLETED": LidBolexCompleted,
-    "LID_ALERT_CLEARED": LidAlertCleared,
-    "LID_ALARM_CLEARED": LidAlarmCleared,
-    "LID_CARTRIDGE_FILLED": LidCartridgeFilled,
-    "LID_SHELF_MODE": LidShelfMode,
-    "LID_BOLUS_ACTIVATED": LidBolusActivated,
-    "LID_BOLEX_ACTIVATED": LidBolexActivated,
-    "LID_DATA_LOG_CORRUPTION": LidDataLogCorruption,
-    "LID_CANNULA_FILLED": LidCannulaFilled,
-    "LID_TUBING_FILLED": LidTubingFilled,
-    "LID_BOLUS_REQUESTED_MSG1": LidBolusRequestedMsg1,
-    "LID_BOLUS_REQUESTED_MSG2": LidBolusRequestedMsg2,
-    "LID_BOLUS_REQUESTED_MSG3": LidBolusRequestedMsg3,
-    "LID_NEW_DAY": LidNewDay,
-    "LID_ARM_INIT": LidArmInit,
-    "LID_PLGS_PERIODIC": LidPlgsPeriodic,
-    "LID_CGM_ALERT_ACTIVATED": LidCgmAlertActivated,
-    "LID_CGM_ALERT_CLEARED": LidCgmAlertCleared,
-    "LID_VERSION_INFO": LidVersionInfo,
-    "LID_UPDATE_STATUS": LidUpdateStatus,
-    "LID_CGM_START_SESSION_GX": LidCgmStartSessionGx,
-    "LID_CGM_JOIN_SESSION_GX": LidCgmJoinSessionGx,
-    "LID_CGM_STOP_SESSION_GX": LidCgmStopSessionGx,
-    "LID_AA_USER_MODE_CHANGE": LidAaUserModeChange,
-    "LID_AA_PCM_CHANGE": LidAaPcmChange,
-    "LID_CGM_DATA_GXB": LidCgmDataGxb,
-    "LID_BASAL_DELIVERY": LidBasalDelivery,
-    "LID_BOLUS_DELIVERY": LidBolusDelivery,
-    "LID_VERSIONS_A": LidVersionsA,
-    "LID_AA_DAILY_STATUS": LidAaDailyStatus,
-    "LID_CGM_ALERT_ACTIVATED_DEX": LidCgmAlertActivatedDex,
-    "LID_CGM_ALERT_CLEARED_DEX": LidCgmAlertClearedDex,
-    "LID_CGM_ALERT_ACK_DEX": LidCgmAlertAckDex,
-    "LID_CGM_DATA_FSL2": LidCgmDataFsl2,
-    "LID_CGM_JOIN_SESSION_G7": LidCgmJoinSessionG7,
-    "LID_CGM_DATA_G7": LidCgmDataG7,
-    "LID_CGM_START_SESSION_FSL2": LidCgmStartSessionFsl2,
-    "LID_CGM_STOP_SESSION_FSL2": LidCgmStopSessionFsl2,
-    "LID_CGM_JOIN_SESSION_FSL2": LidCgmJoinSessionFsl2,
-    "LID_CGM_STOP_SESSION_G7": LidCgmStopSessionG7,
-    "LID_CGM_ALERT_ACTIVATED_FSL2": LidCgmAlertActivatedFsl2,
-    "LID_CGM_ALERT_CLEARED_FSL2": LidCgmAlertClearedFsl2,
-    "LID_DAILY_BASAL": LidDailyBasal,
-    "LID_CARBS_ENTERED": LidCarbsEntered,
-    "LID_USB_CONNECTED": LidUsbConnected,
-    "LID_USB_DISCONNECTED": LidUsbDisconnected,
+    "BASAL_RATE_CHANGE": BasalRateChange,
+    "ALERT_ACTIVATED": AlertActivated,
+    "ALARM_ACTIVATED": AlarmActivated,
+    "MALFUNCTION_ACTIVATED": MalfunctionActivated,
+    "PUMPING_SUSPENDED": PumpingSuspended,
+    "PUMPING_RESUMED": PumpingResumed,
+    "TIME_CHANGED": TimeChanged,
+    "DATE_CHANGED": DateChanged,
+    "BG_READING_TAKEN": BgReadingTaken,
+    "BOLUS_COMPLETED": BolusCompleted,
+    "BOLEX_COMPLETED": BolexCompleted,
+    "ALERT_CLEARED": AlertCleared,
+    "ALARM_CLEARED": AlarmCleared,
+    "CARTRIDGE_FILLED": CartridgeFilled,
+    "SHELF_MODE": ShelfMode,
+    "BOLUS_ACTIVATED": BolusActivated,
+    "BOLEX_ACTIVATED": BolexActivated,
+    "DATA_LOG_CORRUPTION": DataLogCorruption,
+    "CANNULA_FILLED": CannulaFilled,
+    "TUBING_FILLED": TubingFilled,
+    "BOLUS_REQUESTED_MSG1": BolusRequestedMsg1,
+    "BOLUS_REQUESTED_MSG2": BolusRequestedMsg2,
+    "BOLUS_REQUESTED_MSG3": BolusRequestedMsg3,
+    "NEW_DAY": NewDay,
+    "ARM_INIT": ArmInit,
+    "PLGS_PERIODIC": PlgsPeriodic,
+    "CGM_ALERT_ACTIVATED": CgmAlertActivated,
+    "CGM_ALERT_CLEARED": CgmAlertCleared,
+    "VERSION_INFO": VersionInfo,
+    "UPDATE_STATUS": UpdateStatus,
+    "CGM_START_SESSION_GX": CgmStartSessionGx,
+    "CGM_JOIN_SESSION_GX": CgmJoinSessionGx,
+    "CGM_STOP_SESSION_GX": CgmStopSessionGx,
+    "AA_USER_MODE_CHANGE": AaUserModeChange,
+    "AA_PCM_CHANGE": AaPcmChange,
+    "CGM_DATA_GXB": CgmDataGxb,
+    "BASAL_DELIVERY": BasalDelivery,
+    "BOLUS_DELIVERY": BolusDelivery,
+    "VERSIONS_A": VersionsA,
+    "AA_DAILY_STATUS": AaDailyStatus,
+    "CGM_ALERT_ACTIVATED_DEX": CgmAlertActivatedDex,
+    "CGM_ALERT_CLEARED_DEX": CgmAlertClearedDex,
+    "CGM_ALERT_ACK_DEX": CgmAlertAckDex,
+    "CGM_DATA_FSL2": CgmDataFsl2,
+    "CGM_JOIN_SESSION_G7": CgmJoinSessionG7,
+    "CGM_DATA_G7": CgmDataG7,
+    "CGM_START_SESSION_FSL2": CgmStartSessionFsl2,
+    "CGM_STOP_SESSION_FSL2": CgmStopSessionFsl2,
+    "CGM_JOIN_SESSION_FSL2": CgmJoinSessionFsl2,
+    "CGM_STOP_SESSION_G7": CgmStopSessionG7,
+    "CGM_ALERT_ACTIVATED_FSL2": CgmAlertActivatedFsl2,
+    "CGM_ALERT_CLEARED_FSL2": CgmAlertClearedFsl2,
+    "DAILY_BASAL": DailyBasal,
+    "CARBS_ENTERED": CarbsEntered,
+    "USB_CONNECTED": UsbConnected,
+    "USB_DISCONNECTED": UsbDisconnected,
 }
 
